@@ -15,7 +15,7 @@ SELECT emp.emp_no AS "Employee Number",
 		emp.last_name AS "Last Name",
 		emp.first_name AS "First Name",
 		emp.gender AS "Gender",
-		concat('$', format (sal.salary, 2)) AS "Salary"
+		to_char(sal.salary, 'FM$999,999,999,990D00') AS "Salary"  
 		
 FROM employees emp
 	LEFT JOIN salaries sal
@@ -54,12 +54,15 @@ FROM departments dep
 -- 4. List the department of each employee with the following information: 
 --	  employee number, last name, first name, and department name.
 
-SELECT employees.emp_no AS "Employee Number", employees.last_name AS "Last Name", employees.first_name AS "First Name", departments.dept_name AS "Department"
-FROM employees
+SELECT emp.emp_no AS "Employee Number",
+		emp.last_name AS "Last Name",
+		emp.first_name AS "First Name",
+		dep.dept_name AS "Department"
+FROM employees emp
   JOIN dept_emp
-  ON employees.emp_no=dept_emp.emp_no
-    JOIN departments
-	ON dept_emp.dept_no=departments.dept_no;
+  ON emp.emp_no=dept_emp.emp_no
+    JOIN departments dep
+	ON dept_emp.dept_no=dep.dept_no;
 
 -- 5. List all employees whose first name is "Hercules" and last names begin with "B."
 
@@ -71,25 +74,31 @@ FROM employees
  
 -- 6. List all employees in the Sales department, including their employee number, last name, first name, and department name.
 
-SELECT employees.emp_no AS "Employee Number", employees.last_name AS "Last Name", employees.first_name AS "First Name", departments.dept_name AS "Departement"
-FROM employees
+SELECT emp.emp_no AS "Employee Number", 
+		emp.last_name AS "Last Name",
+		emp.first_name AS "First Name",
+		dep.dept_name AS "Departement"
+FROM employees emp
 	JOIN dept_emp
-	ON employees.emp_no = dept_emp.emp_no
-		JOIN departments
-		ON dept_emp.dept_no = departments.dept_no
-		WHERE departments.dept_name = 'Sales';
+	ON emp.emp_no = dept_emp.emp_no
+		JOIN departments dep
+		ON dept_emp.dept_no = dep.dept_no
+		WHERE dep.dept_name = 'Sales';
 	
 	
 -- 7. List all employees in the Sales and Development departments, including their employee number, last name, first name, and department name.
 
-SELECT employees.emp_no AS "Employee Number", employees.last_name AS "Last Name", employees.first_name AS "First Name", departments.dept_name AS "Department"
-FROM employees
+SELECT emp.emp_no AS "Employee Number",
+		emp.last_name AS "Last Name",
+		emp.first_name AS "First Name",
+		dep.dept_name AS "Department"
+FROM employees emp
 	JOIN dept_emp
-	ON employees.emp_no = dept_emp.emp_no
-		JOIN departments
-		ON dept_emp.dept_no = departments.dept_no
-		WHERE departments.dept_name = 'Sales'
-		OR departments.dept_name = 'Development';
+	ON emp.emp_no = dept_emp.emp_no
+		JOIN departments dep
+		ON dept_emp.dept_no = dep.dept_no
+		WHERE dep.dept_name = 'Sales'
+		OR dep.dept_name = 'Development';
 	
 
 -- 8. In descending order, list the frequency count of employee last names, i.e., how many employees share each last name.
