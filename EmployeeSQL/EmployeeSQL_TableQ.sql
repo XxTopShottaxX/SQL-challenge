@@ -1,4 +1,4 @@
---CREATE DATABASE IF NOT EXISTS ph_employee_db
+--CREATE DATABASE IF NOT EXISTS PH_employee_db
 
 CREATE TABLE employees(
 	
